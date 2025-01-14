@@ -9,7 +9,7 @@ Module developed to standardize the creation of Oracle Streaming Service.
 
 | Module Version | Terraform Version | OCI Version     |
 |----------------|-------------------| --------------- |
-| v1.0.0         | v1.9.8            | 6.8.0           |
+| v1.0.0         | v1.10.2           | 6.21.0          |
 
 ## Specifying a version
 
@@ -19,7 +19,7 @@ Note: The `?ref=***` refers a tag on the git module repo.
 ## Default use case
 ```hcl
 module "ssx-system-env-id" {    
-  source = "git::https://github.com/danilomnds/terraform-oci-streaming?ref=v1.0.0"
+  source = "git::https://github.com/danilomnds/terraform-oci-streaming?ref=v1.1.0"
   compartment_id = <compartment id>
   name = <ssx-system-env-id>
   kafka_settings = {
@@ -79,6 +79,12 @@ module "ssx-system-env-id" {
   ]
   # GRP_OCI_APP-ENV is the Azure AD group that you are going to grant the permissions
   groups = ["OracleIdentityCloudService/GRP_OCI_APP-ENV", "group name 2"]
+  # service account
+  service_account_name        = "sa-timsa-it-streaming-system-end"
+  service_account_description = "A conta de serviço do projeto solicitada via chamado XXXXXXXX. Integração do streaming com demais serviços"
+  root_compartment_id         = "id"
+  group_name                  = "OCI_STREAM-system-env"
+  group_description           = "Grupo para usuário p/ a service account de streaming"
   defined_tags = {
     "IT.area":"infrastructure"
     "IT.department":"ti"    
@@ -105,6 +111,11 @@ output "stream_id" {
 | private_endpoint_settings | Optional parameters if a private stream pool is requested | `object({})` | n/a | No |
 | stream | List of stream that will be creating using the stream pool created by this module | `object({})` | n/a | No |
 | groups | list of groups that will access the resource | `list(string)` | n/a | No |
+| root_compartment_id | The OCID of the root compartment where the service account will be created | `string` | n/a | `Yes if you need a SA` |
+| service_account_description | The description you assign to the user during creation | `string` | n/a | `Yes if you need a SA` |
+| service_account_name | the name of the service account | `string` | n/a | `Yes if you need a SA` |
+| group_name | the group name that the sa will belong to | `string` | n/a | `Yes if you need a SA` |
+| group_description | The group description | `string` | n/a | `Yes if you need a SA` |
 
 
 # Object variables for blocks Stream Pool

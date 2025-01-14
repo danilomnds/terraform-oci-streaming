@@ -55,3 +55,29 @@ variable "groups" {
   type    = list(string)
   default = []
 }
+
+# service account vars
+variable "root_compartment_id" {
+  type    = string
+  default = null
+}
+
+variable "service_account_description" {
+  type    = string
+  default = null
+}
+
+variable "service_account_name" {
+  type    = string
+  default = null
+}
+
+variable "group_description" {
+  type    = string
+  default = null
+}
+
+variable "group_name" {
+  type    = string
+  default = null
+}
